@@ -1,0 +1,49 @@
+server:
+  port: 7702
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    accept-count: 1000
+    max-connections: 5000
+    min-spare-threads: 20
+  servlet:
+    context-path: /uaa-provider
+
+#### 暴露端点
+management:
+  endpoints:
+    web:
+      base-path: "/actuator"  # 配置 Endpoint 的基础路径
+      exposure:
+        include: '*'  #在yaml 文件属于关键字，所以需要加引号
+  endpoint:
+    logfile:
+      # spring boot admin  client不配置日志文件路径（同时配置logback-spring.xml对应的日志输出配置，否则无法输出日志），
+      # 控制台上的Logging模块下的Logfile会报错：Fetching logfile failed.Request failed with status code 404
+      external-file: ./logs/uaa-provider/logs/output.log
+      enabled: true
+    health:
+      show-details: always
+
+eureka:
+  client:
+    register-with-eureka: true #注册到eureka配置中心
+    fetch-registry: true       #要不要去注册中心获取其他服务
+    serviceUrl:
+      defaultZone: ${SCAFFOLD_EUREKA_ZONE_HOSTS:http://localhost:7777/eureka/}
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    ip-address: ${spring.cloud.client.ip-address}
+    prefer-ip-address: true  #访问路径可以显示IP地址
+    status-page-url-path: /${management.endpoints.web.base-path}/info #定义实例信息的页面地址
+    health-check-url-path: /${management.endpoints.web.base-path}/health #定义健康检查的页面地
+
+spring:
+  cloud:
+    config:
+      label: dev
+      name: springcloud
+      profile: common,redis,db
+      discovery:
+        enabled: true
+        service-id: config-server

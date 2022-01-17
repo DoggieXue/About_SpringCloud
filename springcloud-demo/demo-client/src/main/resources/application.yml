@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: demo-client
+server:
+  port: 7878
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${SCAFFOLD_EUREKA_ZONE_HOSTS:http://localhost:7777/eureka/}
