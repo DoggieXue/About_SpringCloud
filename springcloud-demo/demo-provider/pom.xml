@@ -26,6 +26,32 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!-- eureka client 用于将本服务注册到eureka注册中心，提供服务-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.cloudxue.springcloud</groupId>
+            <artifactId>base-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--用于心跳检测-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.cloudxue.springcloud</groupId>
+            <artifactId>base-runtime</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cloudxue.springcloud</groupId>
+            <artifactId>demo-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

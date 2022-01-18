@@ -11,5 +11,11 @@
 
     <artifactId>uaa-client</artifactId>
 
-
+    <dependencies>
+        <!--feign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+    </dependencies>
 </project>

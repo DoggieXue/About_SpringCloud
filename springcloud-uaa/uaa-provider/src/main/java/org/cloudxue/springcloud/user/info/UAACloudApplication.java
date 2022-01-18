@@ -1,9 +1,12 @@
 package org.cloudxue.springcloud.user.info;
 
 import lombok.extern.slf4j.Slf4j;
+import org.cloudxue.springcloud.standard.config.TokenFeignConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -15,9 +18,18 @@ import org.springframework.core.env.Environment;
  * @Version 1.0
  **/
 
+@EnableHystrix
+@EnableFeignClients(
+        basePackages = {"org.cloudxue.springcloud.demo.client"},
+        defaultConfiguration = TokenFeignConfiguration.class
+)
 @EnableDiscoveryClient
-//@EnableEurekaClient
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages = {
+                "org.cloudxue.springcloud.user",
+                "org.cloudxue.springcloud.demo.client.fallback"
+        }
+)
 @Slf4j
 public class UAACloudApplication {
     public static void main(String[] args) {
