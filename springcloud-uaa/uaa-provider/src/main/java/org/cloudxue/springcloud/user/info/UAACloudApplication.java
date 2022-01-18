@@ -18,12 +18,21 @@ import org.springframework.core.env.Environment;
  * @Version 1.0
  **/
 
+/**
+ * 启用Hystrix
+ */
 @EnableHystrix
+/**
+ * 指定远程Feign所在位置，避免出现404问题
+ */
 @EnableFeignClients(
         basePackages = {"org.cloudxue.springcloud.demo.client"},
         defaultConfiguration = TokenFeignConfiguration.class
 )
 @EnableDiscoveryClient
+/**
+ * 指定当前服务启动时需要扫描的包，避免出现404
+ */
 @SpringBootApplication(
         scanBasePackages = {
                 "org.cloudxue.springcloud.user",

@@ -2,7 +2,7 @@ package org.cloudxue.springcloud.demo.client.remote;
 
 import com.alibaba.fastjson.JSONObject;
 import org.cloudxue.springcloud.common.result.RestOut;
-import org.cloudxue.springcloud.demo.client.fallback.DemoDefaultFallback;
+import org.cloudxue.springcloud.demo.client.fallback.DemoClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(
         value = "demo-provider",
         path = "/demo-provider/api/demo/",
-        fallback = DemoDefaultFallback.class
+//        fallback = DemoDefaultFallback.class
+        fallbackFactory = DemoClientFallbackFactory.class
 )
+
 public interface DemoClient {
     /**
      * 远程调用接口方法
