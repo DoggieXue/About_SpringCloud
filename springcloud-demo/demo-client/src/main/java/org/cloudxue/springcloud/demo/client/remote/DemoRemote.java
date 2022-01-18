@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date 2022/1/16 下午2:20
  * @Version 1.0
  **/
-@FeignClient(name = "uaa-provider", path = "/uaa-provider")
+@FeignClient(name = "uaa-provider", fallback = DemoRemoteHystrix.class)
 public interface DemoRemote {
 
     @RequestMapping(value = "/hello")

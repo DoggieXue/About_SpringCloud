@@ -7,3 +7,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${SCAFFOLD_EUREKA_ZONE_HOSTS:http://localhost:7777/eureka/}
+#Feign中已经依赖了Hystrix，此处开启Feign对Hystrix的支持
+feign:
+  hystrix:
+    enabled: true

@@ -20,6 +20,6 @@ public class RPCDemoController {
 
     @RequestMapping("/hello")
     public String index(@RequestParam String name) {
-        return "Hello " + name + ", Welcome to Spring Cloud World, I'm Produce 2";
+        return "Hello " + name + ", Welcome to Spring Cloud World";
     }
 }
