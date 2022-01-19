@@ -10,6 +10,10 @@ import org.cloudxue.springcloud.demo.proxy.MockDemoClient;
 /**
  * @ClassName DemoClientStaticProxy
  * @Description 静态代理类
+ * 1、远程抽象接口：MockClient.java
+ * 2、真实被委托类：RealRpcDemoClientImpl.java
+ * 3、静态代理类：DemoClientStaticProxy.java
+ * 4、远程接口：DemoClient.java
  * @Author xuexiao
  * @Date 2022/1/19 下午3:13
  * @Version 1.0

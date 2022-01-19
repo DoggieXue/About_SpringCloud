@@ -7,6 +7,9 @@ import org.cloudxue.springcloud.demo.client.remote.DemoClient;
 import org.cloudxue.springcloud.demo.proxy.MockDemoClient;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+
 /**
  * @ClassName ProxyTester
  * @Description 请描述类的业务用途
@@ -48,6 +51,35 @@ public class ProxyTester {
         log.info("helloResult={}", helloResult);
 
         RestOut<JSONObject> echoResult = proxy.echo("staticProxy");
+        log.info("echoResult={}", echoResult);
+    }
+
+    /**
+     * 动态代理测试
+     */
+    @Test
+    public void dynamicProxyTest() {
+        /**
+         * 被代理的真实RPC调用类
+         */
+        MockDemoClient realObject = new RealRpcDemoClientImpl();
+        //参数1：类加载器
+//        ClassLoader classLoader = ProxyTester.class.getClassLoader();
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        //参数2: 代理类和委托类共同的抽象接口
+        Class[] clazz = new Class[]{MockDemoClient.class};
+        //参数3： 动态代理的被调用处理器
+        InvocationHandler invocationHandler = new DemoClientInvocationHandler(realObject);
+
+        /**
+         * 创建JDK动态代理
+         */
+        MockDemoClient proxy = (MockDemoClient) Proxy.newProxyInstance(classLoader,clazz, invocationHandler);
+
+        RestOut<JSONObject> helloResult = proxy.hello();
+        log.info("helloResult={}", helloResult);
+
+        RestOut<JSONObject> echoResult = proxy.echo("dynamicProxy");
         log.info("echoResult={}", echoResult);
     }
 }
