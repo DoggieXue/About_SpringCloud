@@ -22,7 +22,7 @@ public interface MockDemoClient {
      * REST 接口 功能：返回 hello world
      * @return
      */
-    @GetMapping("api/demo/hello/v1")
+    @GetMapping(name = "api/demo/hello/v1")
     RestOut<JSONObject> hello();
 
     /**
@@ -32,6 +32,6 @@ public interface MockDemoClient {
      * @param word
      * @return
      */
-    @GetMapping("api/demo/echo/{0}/v1")
+    @GetMapping(name = "api/demo/echo/{0}/v1")
     RestOut<JSONObject> echo(String word);
 }

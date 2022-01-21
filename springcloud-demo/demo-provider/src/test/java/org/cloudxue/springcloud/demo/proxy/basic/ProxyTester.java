@@ -6,7 +6,11 @@ import org.cloudxue.springcloud.common.result.RestOut;
 import org.cloudxue.springcloud.demo.client.remote.DemoClient;
 import org.cloudxue.springcloud.demo.proxy.MockDemoClient;
 import org.junit.Test;
+import sun.misc.ProxyGenerator;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -58,7 +62,7 @@ public class ProxyTester {
      * 动态代理测试
      */
     @Test
-    public void dynamicProxyTest() {
+    public void dynamicProxyTest() throws IOException {
         /**
          * 被代理的真实RPC调用类
          */
@@ -81,5 +85,15 @@ public class ProxyTester {
 
         RestOut<JSONObject> echoResult = proxy.echo("dynamicProxy");
         log.info("echoResult={}", echoResult);
+
+        /**
+         * 将动态代理类的class字节码，保存在当前的工程目录下
+         */
+        byte[] classFile = ProxyGenerator.generateProxyClass("Proxy0", RealRpcDemoClientImpl.class.getInterfaces());
+
+        FileOutputStream fos = new FileOutputStream(new File("Proxy0.class"));
+        fos.write(classFile);
+        fos.flush();
+        fos.close();
     }
 }
