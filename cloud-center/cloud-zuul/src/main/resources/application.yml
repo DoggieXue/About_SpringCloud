@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: cloud-zuul
+zuul:
+  sensitive-headers:
+eureka:
+  client:
+    healthcheck:
+      enabled: true #开启客户端健康检查
+server:
+  servlet:
+    context-path: /
