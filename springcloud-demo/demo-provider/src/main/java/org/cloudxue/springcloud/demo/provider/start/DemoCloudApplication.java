@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
@@ -25,7 +26,7 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication(scanBasePackages = {
         "org.cloudxue.springcloud.demo.provider",
         "org.cloudxue.springcloud.demo.client.fallback"
-})
+}, exclude = {SecurityAutoConfiguration.class})
 @Slf4j
 public class DemoCloudApplication {
     public static void main(String[] args) {
