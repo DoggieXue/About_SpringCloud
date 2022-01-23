@@ -1,6 +1,10 @@
 spring:
   application:
     name: demo-provider
+  security:
+    user:
+      name: admin
+      password: 123456
 eureka:
   client:
     healthcheck:

@@ -1,6 +1,8 @@
-package org.cloudxue.springcloud.demo.provider.controller;
+package org.cloudxue.springcloud.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.cloudxue.springcloud.common.result.RestOut;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +21,11 @@ import java.util.Enumeration;
  **/
 @RestController
 @RequestMapping("/api/demo")
+@Api(tags = "Demo 演示")
 public class DemoController {
 
     @GetMapping("/hello/v1")
+    @ApiOperation(value = "hello world api 接口")
     public RestOut<JSONObject> hello() {
         JSONObject data = new JSONObject();
         data.put("hello", "world");
@@ -29,6 +33,7 @@ public class DemoController {
     }
 
     @GetMapping("/echo/{word}/v1")
+    @ApiOperation(value = "回显消息  api 接口")
     public RestOut<JSONObject> echo(@PathVariable(value = "word") String word) {
         JSONObject data = new JSONObject();
         data.put("echo", word);
@@ -41,6 +46,7 @@ public class DemoController {
      * @return
      */
     @GetMapping("/header/echo/v1")
+    @ApiOperation(value = "回显头部信息")
     public RestOut<JSONObject> echo(HttpServletRequest request) {
         JSONObject data = new JSONObject();
         Enumeration headerNames = request.getHeaderNames();

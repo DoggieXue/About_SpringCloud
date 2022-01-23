@@ -1,4 +1,4 @@
-package org.cloudxue.springcloud.demo.provider.start;
+package org.cloudxue.springcloud.demo.start;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @ClassName DemoCloudApplication
@@ -22,9 +23,10 @@ import org.springframework.core.env.Environment;
 //        basePackages = {"org.cloudxue.springcloud.demo.client.remote"},
 //        defaultConfiguration = FeignConfiguration.class
 //)
+@EnableSwagger2
 @EnableEurekaClient
 @SpringBootApplication(scanBasePackages = {
-        "org.cloudxue.springcloud.demo.provider",
+        "org.cloudxue.springcloud.demo",
         "org.cloudxue.springcloud.demo.client.fallback"
 }, exclude = {SecurityAutoConfiguration.class})
 @Slf4j

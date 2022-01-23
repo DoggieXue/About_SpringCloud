@@ -13,7 +13,7 @@ public class SessionConstants {
      */
 
     public static final String AUTHORIZATION_HEAD = "token";
-//    public static final String ADMIN_AUTHORIZATION_HEAD = "Authorization";
+    public static final String ADMIN_AUTHORIZATION_HEAD = "Authorization";
 
     /**
      * token请求头名称

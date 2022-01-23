@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.cloudxue.springcloud.common.result.RestOut;
 import org.cloudxue.springcloud.common.util.HttpRequestUtil;
 import org.cloudxue.springcloud.common.util.JsonUtil;
-import org.cloudxue.springcloud.demo.provider.constant.TestConstants;
+import org.cloudxue.springcloud.demo.constant.TestConstants;
 import org.cloudxue.springcloud.demo.proxy.MockDemoClient;
 
 import java.io.IOException;

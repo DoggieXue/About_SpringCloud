@@ -1,4 +1,4 @@
-package org.cloudxue.springcloud.demo.provider.constant;
+package org.cloudxue.springcloud.demo.constant;
 
 /**
  * @ClassName TestConstants

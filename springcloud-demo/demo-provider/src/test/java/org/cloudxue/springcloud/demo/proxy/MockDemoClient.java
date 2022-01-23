@@ -2,7 +2,7 @@ package org.cloudxue.springcloud.demo.proxy;
 
 import com.alibaba.fastjson.JSONObject;
 import org.cloudxue.springcloud.common.result.RestOut;
-import org.cloudxue.springcloud.demo.provider.constant.TestConstants;
+import org.cloudxue.springcloud.demo.constant.TestConstants;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
