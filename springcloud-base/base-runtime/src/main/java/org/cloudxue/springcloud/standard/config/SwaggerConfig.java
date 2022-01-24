@@ -1,13 +1,5 @@
 package org.cloudxue.springcloud.standard.config;
 
-/**
- * @ClassName Swagger
- * @Description 请描述类的业务用途
- * @Author xuexiao
- * @Date 2022/1/23 下午11:47
- * @Version 1.0
- **/
-
 import org.cloudxue.springcloud.common.constants.SessionConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,20 +27,19 @@ import java.util.LinkedList;
 @Profile({"dev","sit"})
 public class SwaggerConfig {
     @Bean
-    public Docket templateApi()
-    {
+    public Docket templateApi() {
         ParameterBuilder tokenPar = new ParameterBuilder();
-        tokenPar.name(SessionConstants.AUTHORIZATION_HEAD).description("token")
+        tokenPar.name(SessionConstants.AUTHORIZATION_HEAD).description("接口请求凭证")
                 .modelRef(new ModelRef("string")).parameterType("header")
                 .required(false).build();
 
         ParameterBuilder adminTokenPar = new ParameterBuilder();
-        adminTokenPar.name(SessionConstants.ADMIN_AUTHORIZATION_HEAD).description("管理控制台 token 令牌" )
+        adminTokenPar.name(SessionConstants.ADMIN_AUTHORIZATION_HEAD).description("管理控制台接口请求凭证" )
                 .modelRef(new ModelRef("string" )).parameterType("header" )
                 .required(false).build();
 
         ParameterBuilder user = new ParameterBuilder();
-        user.name(SessionConstants.USER_IDENTIFIER).description("user-id")
+        user.name(SessionConstants.USER_IDENTIFIER).description("用户编号")
                 .modelRef(new ModelRef("string")).parameterType("header")
                 .required(false).build();
         LinkedList<Parameter> list = new LinkedList<>();
@@ -62,8 +53,7 @@ public class SwaggerConfig {
                 .select()
 
                 //控制暴露出去的路径下的实例
-                //如果某个接口不想暴露,可以使用以下注解
-                //@ApiIgnore 这样,该接口就不会暴露在 swagger2 的页面下
+                //如果某个接口不想暴露,可以使用注解 @ApiIgnore,该接口就不会暴露在 swagger2 的页面下
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .build()
                 .directModelSubstitute(Long.class, String.class)
@@ -71,23 +61,20 @@ public class SwaggerConfig {
     }
 
     //构建 api文档的详细信息函数
-    private ApiInfo apiInfo()
-    {
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("疯狂创客圈 springcloud + Nginx 高并发核心编程")
+                .title("Spring Cloud 脚手架接口概览")
                 //描述
                 .description("Zuul+Swagger2  构建  RESTful APIs")
                 //条款地址
                 .termsOfServiceUrl("https://www.cnblogs.com/crazymakercircle/")
-                .contact(new Contact("疯狂创客圈", "https://www.cnblogs.com/crazymakercircle/", ""))
+                .contact(new Contact("Spring-Cloud-脚手架", "https://doublexz.github.io/doggie.github.io/", "xx734513550@gmail.com"))
                 .version("1.0")
                 .build();
     }
 
     @Value("${server.servlet.context-path}")
     private String servletContextPath;
-
-
 
 }
