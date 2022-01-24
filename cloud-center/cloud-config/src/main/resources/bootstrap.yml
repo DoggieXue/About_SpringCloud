@@ -23,14 +23,6 @@ spring:
       timeout-seconds: 10
       preferred-networks: ${SCAFFOLD_PREFERRED_NETWORKS:192.168.68.}
       prefer-ip-address: true
-#    config:
-#      label: dev                  #对应服务端规则中的{label}部分
-#      name: springcloud           #对应服务端规则中的{application}部分
-#      profile: common,db,redis    #对应服务端规则中的{profile}部分
-#      uri: http://${CONFIG-HOST}:7788/
-#      discovery:                  #若与Eureka的客户端配合使用，建议开启服务的自动发现机制
-#        enabled: true
-#        service-id: config-server
 
 eureka:
   instance:
