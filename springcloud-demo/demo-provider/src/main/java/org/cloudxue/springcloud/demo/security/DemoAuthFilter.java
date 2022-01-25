@@ -1,6 +1,7 @@
 package org.cloudxue.springcloud.demo.security;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -69,21 +70,25 @@ public class DemoAuthFilter extends OncePerRequestFilter {
             boolean success = false;
 
             String token = request.getHeader(AUTHORIZATION_HEAD);
-            String[] parts = token.split(",");
-            //认证演示
-            DemoToken demoToken = new DemoToken(parts[0], parts[1]);
-            returnToken = this.authenticationManager.authenticate(demoToken);
-            success = demoToken.isAuthenticated();
+            if (StringUtils.isNotBlank(token)) {
+                String[] parts = token.split(",");
+                //认证演示
+                DemoToken demoToken = new DemoToken(parts[0], parts[1]);
+                returnToken = this.authenticationManager.authenticate(demoToken);
+                success = demoToken.isAuthenticated();
 
-            //TODO 数据库 认证演示
+                //TODO 数据库 认证演示
 
-
-            if (success) {
-                //认证成功，这只上下文凭证
-                SecurityContextHolder.getContext().setAuthentication(returnToken);
-                //执行后续操作
-                filterChain.doFilter(request, response);
-                return;
+                if (success) {
+                    //认证成功，这只上下文凭证
+                    SecurityContextHolder.getContext().setAuthentication(returnToken);
+                    //执行后续操作
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+            } else {
+//                log.error("认证失败：token值为空！");
+                failed = new AuthenticationServiceException("认证失败：token值为空！");
             }
         } catch (Exception e) {
             logger.error("认证有误", e);

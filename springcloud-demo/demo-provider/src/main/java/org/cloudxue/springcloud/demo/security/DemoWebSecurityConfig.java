@@ -3,13 +3,15 @@ package org.cloudxue.springcloud.demo.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
  * @ClassName DemoWebSecurityConfigure
- * @Description Spring Security的安全配置类
- *              对WEB容器的HTTP安全认证机制进行配置
+ * @Description Spring Security的安全配置类：对WEB容器的HTTP安全认证机制进行配置
+ *              1、应用HTTP安全认证配置类：DemoAuthConfigure
+ *              2、构造AuthenticationManagerBuilder认证管理者实例。
  * @Author xuexiao
  * @Date 2022/1/23 下午10:17
  * @Version 1.0
@@ -30,7 +32,7 @@ public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //CSRF禁用,基于Token，禁用session
-        http.csrf().disable().sessionManagement().disable()
+        http.csrf().disable()
                 .authorizeRequests()
                 // swagger start
                 .antMatchers("/swagger-ui.html").permitAll()
@@ -41,11 +43,33 @@ public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/configuration/ui").permitAll()
                 .antMatchers("/configuration/security").permitAll()
+                .antMatchers("/**/favicon.ico","/**/css/**", "/**/js/**").permitAll()
                 // swagger end
                 //其他所有请求需要认证
                 .anyRequest().authenticated()
                 .and()
+                .formLogin().disable()
+                .sessionManagement().disable()
+                .cors()
+                .and()
                 .apply(new DemoAuthConfigure<>());
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(
+                "/**/api/user/login/v1",
+                "/**/v2/api-docs",
+                "/**/swagger-resources/configuration/ui",
+                "/**/swagger-resources",
+                "/**/swagger-resources/configuration/security",
+                "/images/**",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "/**/favicon.ico",
+                "/**/css/**",
+                "/**/js/**"
+        );
     }
 
     /**
