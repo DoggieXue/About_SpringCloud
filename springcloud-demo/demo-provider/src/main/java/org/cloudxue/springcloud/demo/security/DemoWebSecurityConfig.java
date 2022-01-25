@@ -1,11 +1,16 @@
 package org.cloudxue.springcloud.demo.security;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.annotation.Resource;
 
 /**
  * @ClassName DemoWebSecurityConfigure
@@ -16,9 +21,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @Date 2022/1/23 下午10:17
  * @Version 1.0
  **/
+//开启WEB容器的HTTP安全认证机制
 @EnableWebSecurity
 public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    //Demo 1：Spring Security基本流程演示
     @Bean("demoAuthProvider")
     protected DemoAuthProvider demoAuthProvider() {
         return new DemoAuthProvider();
@@ -81,7 +87,27 @@ public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //加入自定义的Provider认证提供者实例
-        auth.authenticationProvider(demoAuthProvider());
+        //Demo 1，基本演示流程：加入自定义的Provider认证提供者实例
+//        auth.authenticationProvider(demoAuthProvider());
+        //Demo2，基于数据源的演示流程：加入框架提供的数据源Provider认证提供者实例
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
+    //注入全局BCryptPasswordEncoder加密器容器实例
+    @Resource
+    private PasswordEncoder passwordEncoder;
+    //注入数据源服务容器实例
+    @Resource
+    private DemoAuthUserService demoAuthUserService;
+    @Bean("daoAuthenticationProvider")
+    protected AuthenticationProvider daoAuthenticationProvider() throws Exception {
+        //创建一个数据源提供者
+        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+        //设置加密器
+        daoProvider.setPasswordEncoder(passwordEncoder);
+        //设置用户数据源服务
+        daoProvider.setUserDetailsService(demoAuthUserService);
+
+        return daoProvider;
     }
 }

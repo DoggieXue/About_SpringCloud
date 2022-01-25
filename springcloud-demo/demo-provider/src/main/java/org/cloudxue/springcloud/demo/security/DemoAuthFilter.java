@@ -4,9 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -72,12 +75,27 @@ public class DemoAuthFilter extends OncePerRequestFilter {
             String token = request.getHeader(AUTHORIZATION_HEAD);
             if (StringUtils.isNotBlank(token)) {
                 String[] parts = token.split(",");
-                //认证演示
-                DemoToken demoToken = new DemoToken(parts[0], parts[1]);
-                returnToken = this.authenticationManager.authenticate(demoToken);
-                success = demoToken.isAuthenticated();
+//                //Demo1:认证演示
+//                DemoToken demoToken = new DemoToken(parts[0], parts[1]);
+//                returnToken = this.authenticationManager.authenticate(demoToken);
+//                success = demoToken.isAuthenticated();
 
-                //TODO 数据库 认证演示
+                //Demo2: 数据库认证演示
+                UserDetails userDetails = User.builder()
+                        .username(parts[0])
+                        .password(parts[1])
+                        .authorities(USER_INFO)
+                        .build();
+                //创建一个用户名+密码的凭证
+                Authentication userPassToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        userDetails.getPassword(),
+                        userDetails.getAuthorities());
+                //进入认证流程
+                returnToken = this.getAuthenticationManager().authenticate(userPassToken);
+                success = userPassToken.isAuthenticated();
+
+
 
                 if (success) {
                     //认证成功，这只上下文凭证
