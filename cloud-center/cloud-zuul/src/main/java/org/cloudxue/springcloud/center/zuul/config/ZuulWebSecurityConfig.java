@@ -4,9 +4,9 @@ import org.cloudxue.springcloud.base.security.configure.JwtAuthConfigure;
 import org.cloudxue.springcloud.base.security.handler.JwtRefreshSuccessHandler;
 import org.cloudxue.springcloud.base.security.provider.JwtAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -25,6 +25,7 @@ import javax.annotation.Resource;
  * @Date 2022/1/26 上午10:51
  * @Version 1.0
  **/
+@Configuration
 @EnableWebSecurity
 public class ZuulWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -153,7 +154,7 @@ public class ZuulWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @DependsOn("sessionRepository")
     @Bean("jwtAuthenticationProvider")
-    protected AuthenticationProvider jwtAuthenticationProvider() {
+    protected JwtAuthenticationProvider jwtAuthenticationProvider() {
         return new JwtAuthenticationProvider(sessionRepository);
     }
 
