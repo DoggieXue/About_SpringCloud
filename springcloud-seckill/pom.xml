@@ -15,6 +15,7 @@
         <module>seckill-client</module>
         <module>seckill-provider</module>
         <module>seckill-api</module>
+        <module>seckill-web</module>
     </modules>
 
     <dependencyManagement>

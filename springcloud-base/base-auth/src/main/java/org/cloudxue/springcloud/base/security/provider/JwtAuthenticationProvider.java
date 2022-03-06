@@ -52,8 +52,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         //获取session
         Session session = null;
         try {
-//            session = sessionRepository.findById(sid);
-            session = sessionRepository.getSession(sid);
+            session = sessionRepository.findById(sid);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +76,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new NonceExpiredException("您已经在其他地方登录！");
         }
 
-        String userID = null;
+        String userID;
         if (null == userDTO.getUserId()) {
             userID = String.valueOf(userDTO.getId());
         } else {

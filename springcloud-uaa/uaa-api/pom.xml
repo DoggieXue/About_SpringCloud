@@ -11,5 +11,11 @@
 
     <artifactId>uaa-api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.cloudxue.springcloud</groupId>
+            <artifactId>base-runtime</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

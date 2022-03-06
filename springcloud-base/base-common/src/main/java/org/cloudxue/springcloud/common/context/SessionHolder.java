@@ -22,7 +22,7 @@ public class SessionHolder {
     //session id store prefix 本地线程变量
     private static final ThreadLocal<String> sessionIDStore = new NamedThreadLocal<>("sessionIDStore");
     //session userIdentifier(这里为 user id) 本地线程变量
-    private static final ThreadLocal<String> userIdentifierLocal = new NamedThreadLocal<>("userIdentiferLocal");
+    private static final ThreadLocal<String> userIdentifierLocal = new NamedThreadLocal<>("userIdentifierLocal");
     //session 用户信息 本地线程变量
     private static final ThreadLocal<UserDTO> sessionUserLocal = new NamedThreadLocal<>("sessionUserLocal");
     //session 本地线程变量
@@ -89,9 +89,9 @@ public class SessionHolder {
     }
 
     /**
-     * 获取session 中的userid
+     * 获取session 中的 userId
      *
-     * @return userid
+     * @return userId
      */
     public static String getUserId() {
         UserDTO userDTO = getSessionUser();

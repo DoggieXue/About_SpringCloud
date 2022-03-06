@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
  * @Version 1.0
  **/
 public class JwtUtils {
-    private static final String PUBKEY_START = "";
-    private static final String PUBKEY_END = "";
+    private static final String PUBKEY_START = "-----BEGIN PUBLIC KEY-----";
+    private static final String PUBKEY_END = "-----END PUBLIC KEY-----";
 
     /**
      * 通过classpath获取公钥值

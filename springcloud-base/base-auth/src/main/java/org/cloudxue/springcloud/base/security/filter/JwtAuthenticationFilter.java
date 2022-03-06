@@ -46,10 +46,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private List<RequestMatcher> permissiveRequestMatchers;
 
+    /**
+     * 认证管理者
+     */
     private AuthenticationManager authenticationManager;
+
     protected AuthenticationManager getAuthenticationManager() {
         return authenticationManager;
     }
+
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -116,7 +121,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             unsuccessfulAuthentication(request, response, failed);
             return;
         }
-
+        log.info("获取到请求token: " + token);
         token = StringUtils.removeStart(token, "Bearer ");
 
         try {
@@ -141,7 +146,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if (passedToken != null) {
-            successfulAuthentication(request, response, filterChain, passedToken);
+            successfulAuthentication(request, response, passedToken);
         } else if (!permissiveRequest(request)) {
             unsuccessfulAuthentication(request, response, failed);
             return;
@@ -152,7 +157,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
-                                            FilterChain chain,
                                             Authentication authResult)
             throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(authResult);
