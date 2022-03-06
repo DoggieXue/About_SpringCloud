@@ -48,3 +48,4 @@ Thumbs.db
 /target/
 # *.properties
 
+/springcloud-demo/demo-provider/Proxy0.class
