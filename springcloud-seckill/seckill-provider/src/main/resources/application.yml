@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: seckill-provider
+  jpa:
+    hibernate:
+      ddl-auto: update #配置自动建表，没有表新建，有则更新，控制台显示建表语句
+
+
+http:
+  connection:
+    keepAliveTieout: 60000
