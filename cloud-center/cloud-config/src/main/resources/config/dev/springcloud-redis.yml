@@ -8,7 +8,7 @@ spring:
     maxWaitMillis: 60000  # 获取链接最大等待毫秒
     minEvictableIdleTimeMillis: 1800000  # 最小空闲时间
     numTestsPerEvictionRun: 1024  # 每次释放链接的最大数目
-    password: ${SCAFFOLD_REDIS_PSW:123456}  # 密码 如果你没有设置密码 这个配置可以不设置
+    #password: ${SCAFFOLD_REDIS_PSW:123456}  # 密码 如果你没有设置密码 这个配置可以不设置
     #    password:  # 密码 如果你没有设置密码 这个配置可以不设置
     port: 6379  # redis端口
     softMinEvictableIdleTimeMillis: 10000  # 链接空闲多久后释放
