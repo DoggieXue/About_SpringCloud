@@ -1,7 +1,6 @@
 package org.cloudxue.springcloud.user.info;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cloudxue.springcloud.standard.config.TokenFeignConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
