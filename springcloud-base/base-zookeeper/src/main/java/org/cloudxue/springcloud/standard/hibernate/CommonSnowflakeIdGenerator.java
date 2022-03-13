@@ -24,8 +24,6 @@ public class CommonSnowflakeIdGenerator extends IncrementGenerator {
      */
     private static Map<String, SnowflakeIdGenerator> generatorMap = new LinkedHashMap<>();
 
-
-
     /**
      * 从父类继承方法：生成分布式 ID
      */
