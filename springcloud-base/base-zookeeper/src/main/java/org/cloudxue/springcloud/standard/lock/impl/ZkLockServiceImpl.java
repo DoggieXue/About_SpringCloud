@@ -18,7 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ZkLockServiceImpl implements LockService {
     Map<String, InterProcessMutex> lockMap = new ConcurrentHashMap<>();
 
-
     /**
      * 取得ZK 的分布式锁
      *
@@ -29,8 +28,7 @@ public class ZkLockServiceImpl implements LockService {
     {
         CuratorFramework client = ZKClient.getSingleton().getClient();
         InterProcessMutex lock = lockMap.get(key);
-        if (null == lock)
-        {
+        if (null == lock) {
             lock = new InterProcessMutex(client, "/mutex/seckill/" + key);
             lockMap.put(key, lock);
         }
