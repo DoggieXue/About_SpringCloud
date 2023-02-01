@@ -30,7 +30,6 @@ public class ZKClient {
 
     private ZKClient instance = null;
 
-
     private ZKClient() {
 
     }
@@ -46,14 +45,13 @@ public class ZKClient {
         return client;
     }
 
-    public synchronized   void init() {
+    public synchronized void init() {
         if (null != client) {
             return;
         }
         new Thread(() -> {
             //创建客户端
             client = ClientFactory.createSimple(zkAddress);
-
             //启动客户端实例,连接服务器
             client.start();
         }).start();
@@ -79,7 +77,6 @@ public class ZKClient {
                     .creatingParentsIfNeeded()
                     .withMode(CreateMode.PERSISTENT)
                     .forPath(zkPath, payload);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,9 +90,7 @@ public class ZKClient {
             if (!isNodeExist(zkPath)) {
                 return;
             }
-            client.delete()
-                    .forPath(zkPath);
-
+            client.delete().forPath(zkPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,13 +102,11 @@ public class ZKClient {
      */
     public boolean isNodeExist(String zkPath) {
         try {
-
             Stat stat = client.checkExists().forPath(zkPath);
             if (null == stat) {
                 log.info("节点不存在:", zkPath);
                 return false;
             } else {
-
                 log.info("节点存在 stat is:", stat.toString());
                 return true;
             }
@@ -133,9 +126,7 @@ public class ZKClient {
                     .creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
                     .forPath(srcpath);
-
             return path;
-
         } catch (Exception e) {
             e.printStackTrace();
         }

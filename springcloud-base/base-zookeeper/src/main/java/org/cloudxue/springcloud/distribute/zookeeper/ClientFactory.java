@@ -23,7 +23,6 @@ public class ClientFactory {
         // 第二个参数：最大重试次数
         ExponentialBackoffRetry retryPolicy =
                 new ExponentialBackoffRetry(1000, 3);
-
         // 获取 CuratorFramework 实例的最简单的方式
         // 第一个参数：zk的连接地址
         // 第二个参数：重试策略
@@ -40,7 +39,6 @@ public class ClientFactory {
     public static CuratorFramework createWithOptions(
             String connectionString, RetryPolicy retryPolicy,
             int connectionTimeoutMs, int sessionTimeoutMs) {
-
         // builder 模式创建 CuratorFramework 实例
         return CuratorFrameworkFactory.builder()
                 .connectString(connectionString)
