@@ -6,7 +6,10 @@ import org.cloudxue.springcloud.distribute.zookeeper.ZKClient;
 
 /**
  * @ClassName SnowflakeIdWorker
- * @Description 请描述类的业务用途
+ * @Description 基于ZooKeeper集群节点的命名服务
+ *  1、启动节点服务，连接ZooKeeper，检查命名服务根节点是否存在，如果不存在就创建系统根节点；
+ *  2、在根节点下创建一个临时顺序ZNode节点，取回ZNode的编号，作为分布式系统中节点的NodeId；
+ *  3、如果临时节点太多，可以根据需要删除临时顺序ZNode节点。
  * @Author xuexiao
  * @Date 2022/2/7 下午3:59
  * @Version 1.0
@@ -23,7 +26,6 @@ public class SnowflakeIdWorker {
 
     public SnowflakeIdWorker() {
         client = ZKClient.getSingleton().getClient();
-
     }
 
 
@@ -31,16 +33,12 @@ public class SnowflakeIdWorker {
         pathPrefix = "/snowflakeId/" + type + "/worker-";
     }
 
-
     // 在zookeeper中创建临时节点并写入信息
     public void init() {
         client = ZKClient.getSingleton().getClient();
 
-        // 创建一个 ZNode 节点
-        // 节点的 payload 为当前worker 实例
-
+        // 创建一个 ZNode 节点，节点的 payload 为当前worker 实例
         try {
-//            byte[] payload = JsonUtil.object2JsonBytes(this);
             pathRegistered = client.create()
                     .creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
@@ -48,8 +46,7 @@ public class SnowflakeIdWorker {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        inited=true;
+        inited = true;
     }
 
     public long getId() {

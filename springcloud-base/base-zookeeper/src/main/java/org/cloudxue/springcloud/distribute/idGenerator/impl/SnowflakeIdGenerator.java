@@ -4,7 +4,7 @@ import org.cloudxue.springcloud.common.distribute.idGenerator.IdGenerator;
 
 /**
  * @ClassName SnowflakeIdGenerator
- * @Description 请描述类的业务用途
+ * @Description 结合ZooKeeper实现SnowFlake ID算法
  * @Author xuexiao
  * @Date 2022/2/7 下午3:44
  * @Version 1.0
@@ -15,7 +15,6 @@ public class SnowflakeIdGenerator implements IdGenerator {
     private String type = "undefined";
     private boolean inited;
 
-
     public SnowflakeIdGenerator(String type) {
         this.type = type;
         worker = new SnowflakeIdWorker(type);
@@ -25,7 +24,6 @@ public class SnowflakeIdGenerator implements IdGenerator {
      * 该项目的worker 节点 id
      */
     private long workerId;
-
 
     /**
      * 初始化单例
@@ -155,11 +153,5 @@ public class SnowflakeIdGenerator implements IdGenerator {
             current = System.currentTimeMillis();
         }
         return current;
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println("MAX_WORKER_ID = " + MAX_WORKER_ID);
-        System.out.println("MAX_SEQUENCE = " + MAX_SEQUENCE);
     }
 }
