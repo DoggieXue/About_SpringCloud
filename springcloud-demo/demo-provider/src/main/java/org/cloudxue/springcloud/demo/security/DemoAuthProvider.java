@@ -4,6 +4,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @Date 2022/1/23 下午9:20
  * @Version 1.0
  **/
+@Service
 public class DemoAuthProvider implements AuthenticationProvider {
 
     public DemoAuthProvider() {
@@ -24,11 +26,10 @@ public class DemoAuthProvider implements AuthenticationProvider {
     /**
      * 模拟的数据源，实际从DB中获取
      */
-    private Map<String, String> map = new LinkedHashMap<>();
-    //初始化模拟的数据源，放入两个用户
-    {
-        map.put("zhangsan","123456");
-        map.put("lisi","123456");
+    private Map<String, String> map = new LinkedHashMap<>();{
+        //初始化模拟的数据源，放入两个用户
+        map.put("dog","123456");
+        map.put("cat","123456");
     }
 
     /**
@@ -53,11 +54,11 @@ public class DemoAuthProvider implements AuthenticationProvider {
 
     /**
      * 判断凭证是否被支持
-     * @param authtication 此处仅DemoToken凭证被支持
+     * @param authentication 此处仅DemoToken凭证被支持
      * @return
      */
     @Override
-    public boolean supports(Class<?> authtication) {
-        return authtication.isAssignableFrom(DemoToken.class);
+    public boolean supports(Class<?> authentication) {
+        return authentication.isAssignableFrom(DemoToken.class);
     }
 }

@@ -2,6 +2,7 @@ package org.cloudxue.springcloud.demo.start;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.cloudxue.springcloud.standard.context.SpringContextUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -11,6 +12,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
 
 /**
  * @ClassName DemoCloudApplication
@@ -28,8 +31,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication(scanBasePackages = {
         "org.cloudxue.springcloud.demo",
         "org.cloudxue.springcloud.demo.client.fallback",
-        "org.cloudxue.springcloud.standard"
-}, exclude = {SecurityAutoConfiguration.class})
+        "org.cloudxue.springcloud"
+})
 @Slf4j
 public class DemoCloudApplication {
     public static void main(String[] args) {
@@ -37,8 +40,8 @@ public class DemoCloudApplication {
         /**
          * 打印所有的Spring IOC Bean
          */
-//        List<String> beans = SpringContextUtil.getBeanDefinitionNames();
-//        log.info(beans.toString());
+        List<String> beans = SpringContextUtil.getBeanDefinitionNames();
+        log.info(beans.toString());
 
         Environment environment = applicationContext.getEnvironment();
         String port = environment.getProperty("server.port");

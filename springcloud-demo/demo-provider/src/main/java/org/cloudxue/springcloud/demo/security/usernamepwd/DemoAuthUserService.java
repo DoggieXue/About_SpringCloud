@@ -1,4 +1,4 @@
-package org.cloudxue.springcloud.demo.security;
+package org.cloudxue.springcloud.demo.security.usernamepwd;
 
 import org.cloudxue.springcloud.common.constants.SessionConstants;
 import org.cloudxue.springcloud.standard.context.SpringContextUtil;
@@ -27,6 +27,7 @@ public class DemoAuthUserService implements UserDetailsService {
      * 模拟的数据源，实际从DB中获取
      */
     private Map<String, String> map = new LinkedHashMap<>();
+
     //初始化模拟的数据源，放入两个用户
     {
         map.put("zhangsan","123456");
@@ -42,8 +43,8 @@ public class DemoAuthUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //实际场景中，需要从DB中获取
-        String password = map.get(username);
-        if (null == password) {
+        String passwordInDB = map.get(username);
+        if (null == passwordInDB) {
             return null;
         }
 
@@ -56,7 +57,7 @@ public class DemoAuthUserService implements UserDetailsService {
          */
         UserDetails userDetails = User.builder()
                 .username(username)
-                .password(passwordEncoder.encode(password))
+                .password(passwordEncoder.encode(passwordInDB))
                 .authorities(SessionConstants.USER_INFO)
                 .roles("USER")
                 .build();

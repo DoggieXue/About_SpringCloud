@@ -6,7 +6,7 @@ import java.util.Collections;
 
 /**
  * @ClassName DemoToken
- * @Description 自动以凭证/令牌类
+ * @Description 自定义凭证/令牌类
  * @Author xuexiao
  * @Date 2022/1/23 下午9:09
  * @Version 1.0

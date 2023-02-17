@@ -14,7 +14,7 @@ import java.util.Enumeration;
 
 /**
  * @ClassName DemoController
- * @Description 请描述类的业务用途
+ * @Description Demo演示Controller
  * @Author xuexiao
  * @Date 2022/1/18 上午10:50
  * @Version 1.0
@@ -55,6 +55,6 @@ public class DemoController {
             String value = request.getHeader(key);
             data.put(key, value);
         }
-        return RestOut.success(data).setRespMsg("操作成功");
+        return RestOut.success(data,"操作成功");
     }
 }

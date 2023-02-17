@@ -1,16 +1,10 @@
 package org.cloudxue.springcloud.demo.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.annotation.Resource;
 
 /**
  * @ClassName DemoWebSecurityConfigure
@@ -22,13 +16,11 @@ import javax.annotation.Resource;
  * @Version 1.0
  **/
 //开启WEB容器的HTTP安全认证机制
-@EnableWebSecurity
+//@EnableWebSecurity
 public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
     //Demo 1：Spring Security基本流程演示
-    @Bean("demoAuthProvider")
-    protected DemoAuthProvider demoAuthProvider() {
-        return new DemoAuthProvider();
-    }
+    @Autowired
+    private DemoAuthProvider demoAuthProvider;
 
     /**
      * 配置HTTP请求的安全策略，应用DemoAuthConfigure配置类实例
@@ -37,7 +29,7 @@ public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //CSRF禁用,基于Token，禁用session
+        //CSRF禁用,基于Token
         http.csrf().disable()
                 .authorizeRequests()
                 // swagger start
@@ -54,10 +46,15 @@ public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //其他所有请求需要认证
                 .anyRequest().authenticated()
                 .and()
+                //取消HTTP基本认证
+                .httpBasic().disable()
+                //取消表单登录认证
                 .formLogin().disable()
+                //禁用session
                 .sessionManagement().disable()
                 .cors()
                 .and()
+                //应用自定义的DemoAuthConfigure配置类
                 .apply(new DemoAuthConfigure<>());
     }
 
@@ -88,26 +85,6 @@ public class DemoWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //Demo 1，基本演示流程：加入自定义的Provider认证提供者实例
-//        auth.authenticationProvider(demoAuthProvider());
-        //Demo2，基于数据源的演示流程：加入框架提供的数据源Provider认证提供者实例
-        auth.authenticationProvider(daoAuthenticationProvider());
-    }
-
-    //注入全局BCryptPasswordEncoder加密器容器实例
-    @Resource
-    private PasswordEncoder passwordEncoder;
-    //注入数据源服务容器实例
-    @Resource
-    private DemoAuthUserService demoAuthUserService;
-    @Bean("daoAuthenticationProvider")
-    protected AuthenticationProvider daoAuthenticationProvider() throws Exception {
-        //创建一个数据源提供者
-        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-        //设置加密器
-        daoProvider.setPasswordEncoder(passwordEncoder);
-        //设置用户数据源服务
-        daoProvider.setUserDetailsService(demoAuthUserService);
-
-        return daoProvider;
+        auth.authenticationProvider(demoAuthProvider);
     }
 }
