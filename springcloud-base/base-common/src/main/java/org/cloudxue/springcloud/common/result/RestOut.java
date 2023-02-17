@@ -30,18 +30,19 @@ public class RestOut<T> {
      */
     @JsonProperty("respMsg")
     private String respMsg;
+
     /**
      * 实际的数据源
      */
-    @JsonProperty("datas")
-    private T datas;
+    @JsonProperty("data")
+    private T data;
 
     public RestOut (@JsonProperty("respCode") int respCode,
                     @JsonProperty("respMsg") String respMsg,
-                    @JsonProperty("datas") T datas) {
+                    @JsonProperty("data") T data) {
         this.respCode = respCode;
         this.respMsg = respMsg;
-        this.datas = datas;
+        this.data = data;
     }
 
     /**
@@ -94,7 +95,6 @@ public class RestOut<T> {
         return this;
     }
 
-
     public RestOut<T> setRespCode(int respCode) {
         this.respCode = respCode;
         return this;
@@ -103,15 +103,13 @@ public class RestOut<T> {
     @Override
     public String toString() {
         return "RestOut{" +
-                "datas=" + datas +
+                "data=" + data +
                 ", respCode=" + respCode +
                 ", respMsg='" + respMsg +
                 '}';
     }
 
-
-    public boolean isSuccess()
-    {
+    public boolean isSuccess() {
         return respCode==STATUS_SUCCESS;
     }
 }

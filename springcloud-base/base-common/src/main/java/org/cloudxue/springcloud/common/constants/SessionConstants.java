@@ -53,10 +53,12 @@ public class SessionConstants {
      */
     public static final Integer ACCESS_TOKEN_VALIDITY_SECONDS = SESSION_TIME_OUT / 10;
     /**
-     * redis中授权token对应的key
+     * 授权token对应的key admin权限
      */
     public static final String REDIS_TOKEN_AUTH = "auth:";
-
+    /**
+     * 授权token对应的key user权限
+     */
     public static final String USER_INFO = "user-info";
 
     /**
