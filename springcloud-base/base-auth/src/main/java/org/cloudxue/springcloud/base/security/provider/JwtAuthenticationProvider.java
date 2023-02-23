@@ -89,7 +89,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                 .build();
 
         try {
-            //用户密码的密文，作为JWT 的加密盐
+            //用户密码的密文，作为JWT的加密盐
             String encryptSalt = userDTO.getPassword();
             Algorithm algorithm = Algorithm.HMAC256(encryptSalt);
             //创建验证器

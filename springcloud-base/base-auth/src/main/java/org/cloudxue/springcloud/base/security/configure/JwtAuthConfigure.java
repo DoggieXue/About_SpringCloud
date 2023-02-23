@@ -40,15 +40,13 @@ public class JwtAuthConfigure<T extends  JwtAuthConfigure<T, B>, B extends HttpS
         builder.addFilterBefore(filter, LogoutFilter.class);
     }
 
-    public JwtAuthConfigure<T, B> permissiveRequestUrls(String... urls)
-    {
+    public JwtAuthConfigure<T, B> permissiveRequestUrls(String... urls) {
         jwtAuthenticationFilter.setPermissiveUrl(urls);
 
         return this;
     }
 
-    public JwtAuthConfigure<T, B> tokenValidSuccessHandler(AuthenticationSuccessHandler successHandler)
-    {
+    public JwtAuthConfigure<T, B> tokenValidSuccessHandler(AuthenticationSuccessHandler successHandler) {
         jwtAuthenticationFilter.setAuthenticationSuccessHandler(successHandler);
         return this;
     }

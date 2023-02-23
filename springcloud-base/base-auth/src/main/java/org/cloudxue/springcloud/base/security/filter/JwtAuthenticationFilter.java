@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * @ClassName JwtAuthenticationFilter
- * @Description JWT凭证 处理过滤器
+ * @Description JWT凭证处理过滤器
  * @Author xuexiao
  * @Date 2022/1/25 下午3:59
  * @Version 1.0
@@ -130,9 +130,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 JwtAuthenticationToken authToken = new JwtAuthenticationToken(JWT.decode(token));
                 //提交给AuthenticationManager进行令牌验证，获取认证后的令牌
                 passedToken = this.getAuthenticationManager().authenticate(authToken);
+
                 //取得认证后的用户信息，主要是用户ID
                 UserDetails details = (UserDetails) passedToken.getDetails();
-                //通过details.getUsername()获取用户ID，并作为请求属性进行缓存
+                //通过details.getUsername()获取用户ID，并作为请求属性进行缓存。方便后续网关过滤器处理代理请求
                 request.setAttribute(SessionConstants.USER_IDENTIFIER, details.getUsername());
             } else {
                 failed = new InsufficientAuthenticationException("请求头认证消息为空" );

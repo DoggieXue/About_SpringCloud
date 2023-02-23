@@ -37,11 +37,19 @@ public class ModifyRequestHeaderFilter extends ZuulFilter {
             return false;
         }
         /**
-         * 存在用户端认证 token
+         * 存在用户端认证令牌
          */
         String token = request.getHeader(SessionConstants.AUTHORIZATION_HEAD);
         if (!StringUtils.isEmpty(token)) {
             return true;
+        }
+
+        /**
+         * 存在管理端认证令牌
+         */
+        token = request.getHeader(SessionConstants.ADMIN_AUTHORIZATION_HEAD);
+        if (!StringUtils.isEmpty(token)) {
+            return false;
         }
         return false;
     }
@@ -65,10 +73,10 @@ public class ModifyRequestHeaderFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        //认证成功，请求的 USER-ID 属性被设置
-        String sessionSeed = (String)request.getAttribute(SessionConstants.USER_IDENTIFIER);
-        if (StringUtils.isNotBlank(sessionSeed)) {
-            ctx.addZuulRequestHeader(SessionConstants.USER_IDENTIFIER, sessionSeed);
+        //认证成功，请求的 USER-ID 属性会被设置到请求头中
+        String identifier = (String)request.getAttribute(SessionConstants.USER_IDENTIFIER);
+        if (StringUtils.isNotBlank(identifier)) {
+            ctx.addZuulRequestHeader(SessionConstants.USER_IDENTIFIER, identifier);
         }
         return null;
     }

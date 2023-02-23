@@ -29,7 +29,6 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 public class ZuulWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -76,24 +75,13 @@ public class ZuulWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
-                .sessionManagement().disable()
                 .cors()
                 .and()
-//                .headers().addHeaderWriter(new StaticHeadersWriter(Arrays.asList(
-//                new Header("Access-control-Allow-Origin", "*"),
-//                new Header("Access-Control-Expose-Headers", SessionConstants.AUTHORIZATION_HEAD))))
-//                .and()
-//                .addFilterBefore(sessionSeedFilter, CorsFilter.class)
-//                .addFilterAfter(new OptionsRequestFilter(), CorsFilter.class)
-                .apply(new JwtAuthConfigure<>()).tokenValidSuccessHandler(jwtRefreshSuccessHandler()).permissiveRequestUrls("/logout")
+                .apply(new JwtAuthConfigure<>())
+                .tokenValidSuccessHandler(jwtRefreshSuccessHandler()).permissiveRequestUrls("/logout")
                 .and()
                 .logout().disable()
-//                .addFilterBefore(new SessionDataLoadFilter(), SessionManagementFilter.class)
                 .sessionManagement().disable();
-//    		.sessionManagement().maximumSessions(1)
-//                  .maxSessionsPreventsLogin(false)
-//                  .expiredUrl("/login?expired")
-//			      .sessionRegistry(sessionRegistry());
     }
 
     @Override
@@ -101,7 +89,7 @@ public class ZuulWebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 "/**/api/user/login/v1",
                 "/**/actuator/hystrix",
-                "/**/validata/code/**",
+                "/**/validate/code/**",
                 "/**/validate/**",
                 "/**/oauth/**",
                 "/**/css/**",
@@ -125,7 +113,7 @@ public class ZuulWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/api/seckill/**",
                 "/blog/**",
                 "/seckill-provider/api/seckill/seglock/getSeckillResult/v1",
-                "/seckill-provider/api/crazymaker/rockmq/sendSeckill/v1",
+                "/seckill-provider/api/crazymaker/rocktmq/sendSeckill/v1",
                 "/seckill-provider/api/seckill/order/**",
                 "/demo-provider/api/demo/header/echo/v1",
                 "/demo-provider/api/demo/hello/v1",
